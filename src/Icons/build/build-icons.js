@@ -15,7 +15,7 @@ const outputDir = path.join(__dirname, '..', 'components');
 const svgDir = 'raw';
 const components = {};
 const resetIfNotNone = val => val === 'none' ? 'none' : 'currentColor';
-const attributesToRename = {'xlink:href': 'xlinkHref', 'class': 'className'};
+const attributesToRename = {'xlink:href': 'xlinkHref', class: 'className'};
 const attributesToReplace = {fill: resetIfNotNone, stroke: resetIfNotNone};
 
 const cleanPrevious = () => {
@@ -74,11 +74,11 @@ export default ${name};
   return esformatter.format(uglyComponent);
 };
 
-const createReactComponents = co.wrap(function*(svgPath) {
+const createReactComponents = co.wrap(function* (svgPath) {
   const name = path.basename(svgPath, '.svg');
   const location = path.join('components', name + '.js');
   try {
-    svg = fs.readFileSync(svgPath, 'utf-8');
+    let svg = fs.readFileSync(svgPath, 'utf-8');
     svg = yield optimizeSVG(svg);
     const component = createReactSVG(name, svg);
 
@@ -100,7 +100,7 @@ const createIndexFile = () => {
   console.log(path.join('.', 'index.js'));
 };
 
-glob(rootDir + `/${svgDir}/**/*.svg`, co.wrap(function*(err, icons) {
+glob(rootDir + `/${svgDir}/**/*.svg`, co.wrap(function* (err, icons) {
   if (err) {
     console.error(err);
     return;
