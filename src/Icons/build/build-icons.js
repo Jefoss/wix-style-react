@@ -100,15 +100,22 @@ const createIndexFile = () => {
   console.log(path.join('.', 'index.js'));
 };
 
-glob(rootDir + `/${svgDir}/**/*.svg`, co.wrap(function* (err, icons) {
-  if (err) {
-    console.error(err);
-    return;
-  }
+const run = () => {
+  return new Promise(resolve => {
+    glob(rootDir + `/${svgDir}/**/*.svg`, co.wrap(function* (err, icons) {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-  cleanPrevious();
-  yield Promise.all(icons.map(icon => createReactComponents(icon)));
+      cleanPrevious();
+      yield Promise.all(icons.map(icon => createReactComponents(icon)));
 
-  createIndexFile();
-}));
+      createIndexFile();
+      resolve();
+    }));
+  });
+};
+
+module.exports = run;
 

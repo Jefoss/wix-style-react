@@ -20,6 +20,7 @@ export {default as Finder} from './components/Finder';
 export {default as Help} from './components/Help';
 export {default as Image} from './components/Image';
 export {default as Info} from './components/Info';
+export {default as Info2} from './components/Info2';
 export {default as Move} from './components/Move';
 export {default as PartialCheck} from './components/PartialCheck';
 export {default as Pause} from './components/Pause';
