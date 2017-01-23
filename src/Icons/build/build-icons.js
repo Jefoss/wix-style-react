@@ -13,7 +13,7 @@ esformatter.register(require('esformatter-jsx'));
 const rootDir = path.join(__dirname, '..');
 const outputDir = path.join(__dirname, '..', 'components');
 const svgDir = 'raw';
-const components = {};
+let components = {};
 const resetIfNotNone = val => val === 'none' ? 'none' : 'currentColor';
 const attributesToRename = {'xlink:href': 'xlinkHref', class: 'className'};
 const attributesToReplace = {fill: resetIfNotNone, stroke: resetIfNotNone};
@@ -55,7 +55,6 @@ const createReactSVG = (name, svg) => {
   toReactAttributes($svg, $);
   const iconSvg = $svg.html();
   const viewBox = $svg.attr('viewBox');
-
 
   const uglyComponent = `import React from 'react';
 import Icon from '../Icon';
@@ -101,6 +100,7 @@ const createIndexFile = () => {
 };
 
 const run = () => {
+  components = {};
   return new Promise(resolve => {
     glob(rootDir + `/${svgDir}/**/*.svg`, co.wrap(function* (err, icons) {
       if (err) {
