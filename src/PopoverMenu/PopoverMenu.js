@@ -13,7 +13,16 @@ class PopoverMenu extends WixComponent {
     placement: Tooltip.propTypes.placement,
     buttonTheme: Button.propTypes.theme,
     buttonHeight: Button.propTypes.height,
-    maxWidth: Tooltip.propTypes.maxWidth
+    maxWidth: Tooltip.propTypes.maxWidth,
+    showTrigger: Tooltip.propTypes.showTrigger,
+    hideTrigger: Tooltip.propTypes.hideTrigger,
+    active: Tooltip.propTypes.active,
+    onShow: Tooltip.propTypes.onShow,
+    onHide: Tooltip.propTypes.onHide,
+    zIndex: Tooltip.propTypes.zIndex,
+    appendToParent: Tooltip.propTypes.appendToParent,
+    appendTo: Tooltip.propTypes.appendTo,
+    relative: Tooltip.propTypes.relative
   };
 
   static defaultProps = {
@@ -69,17 +78,14 @@ class PopoverMenu extends WixComponent {
 
   render() {
     const {
-      placement,
-      size,
-      maxWidth,
       buttonHeight,
-      buttonTheme
+      buttonTheme,
+      ...tooltipProps
     } = this.props;
 
     return (
       <Tooltip
         ref={tooltip => this.tooltip = tooltip}
-        placement={placement}
         alignment="center"
         content={this.menu()}
         showTrigger="click"
@@ -87,10 +93,9 @@ class PopoverMenu extends WixComponent {
         showDelay={0}
         hideDelay={0}
         theme="light"
-        size={size}
         padding={0}
-        maxWidth={maxWidth}
         shouldCloseOnClickOutside
+        {...tooltipProps}
         >
         <Button
           type="button"
