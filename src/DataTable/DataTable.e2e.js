@@ -26,4 +26,32 @@ describe('Data Table', () => {
           });
       });
   });
+
+  eyes.it('display new data when received', async () => {
+    const dataHook = 'story-data-table-infinite-scroll';
+    const driver = dataTableTestkitFactory({dataHook});
+
+    browser.get(storyUrl);
+
+    await waitForVisibilityOf(driver.element(), 'Cant find Data Table Component');
+    const initialItems = 20;
+    const itemsAfterLoad = 40;
+    driver.scrollToRowByIdx(initialItems - 1);
+
+    const whenLoadedMoreItems = () => {
+      return new Promise(res => {
+        const pollRowsChange = async () => {
+          const rowsCount = await driver.rowsCount();
+          if (rowsCount > initialItems) {
+            res();
+          } else {
+            setTimeout(pollRowsChange, 1000);
+          }
+        };
+        setTimeout(pollRowsChange, 1000);
+      });
+    };
+    await browser.wait(whenLoadedMoreItems(), 10000, 'New data wasnt loaded :(');
+    expect(driver.rowsCount()).toEqual(itemsAfterLoad);
+  });
 });
